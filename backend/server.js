@@ -20,9 +20,23 @@ const app = express();
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
+// Define allowed origins
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://mini-link-lilac.vercel.app',  // your Vercel frontend
+];
+
 // CORS configuration
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000' || 'http://localhost:3001',
+  origin: function (origin, callback) {
+    // allow requests with no origin (like mobile apps, curl, Postman)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 
@@ -66,4 +80,4 @@ const startServer = async () => {
   });
 };
 
-startServer(); 
+startServer();
