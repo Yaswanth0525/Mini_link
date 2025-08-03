@@ -24,8 +24,9 @@ app.use(express.urlencoded({ extended: true }));
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://mini-link-lilac.vercel.app',  // your Vercel frontend
+  'https://mini-link-77kk.onrender.com', 
 ];
+
 
 // CORS configuration
 app.use(cors({
